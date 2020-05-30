@@ -1,8 +1,8 @@
 import * as React from "react";
 import styled from "styled-components";
 
-import ButtonIcon from "../atoms/ButtonIcon";
-import Input from "../atoms/Input";
+import ButtonIcon from "@atom/ButtonIcon";
+import Input from "@atom/Input";
 
 interface Meta {
   error: undefined;

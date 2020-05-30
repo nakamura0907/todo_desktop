@@ -4,13 +4,29 @@ import { v4 as uuidv4 } from "uuid";
 // actions
 export const Actions = createActions(
   {
-    ADD_TODO: (value) => ({ id: uuidv4(), value: value, isCompleted: false, isForm: false }),
+    ADD_TODO: (value, form) => ({
+      id: uuidv4(),
+      deadline: form.deadline,
+      favorite: form.favorite,
+      isCompleted: false,
+      isTask: false,
+      memo: "",
+      priority: form.priority,
+      value: value,
+    }),
     REMOVE_TODO: (index) => ({ index: index }),
-    COMPLETED_TODO: (id) => ({ id: id }),
-    UPDATE_TODO: (id, value) => ({ id: id, value: value }),
+    COMPLETE_TODO: (id) => ({ id: id }),
+    UPDATE_TODO: (id, value, form) => ({
+      id: id,
+      value: value,
+      favorite: form.favorite,
+      priority: form.priority,
+      deadline: form.deadline,
+      memo: form.memo,
+    }),
     CHANGE_TEXTFORM: (id) => ({ id: id }),
   },
-  "CHANCEL_UPDATE"
+  "CANCEL_UPDATE"
 );
 
 // reducer
@@ -28,7 +44,7 @@ const todo = handleActions(
       ...state,
       todos: [...state.todos.slice(0, action.payload.index), ...state.todos.slice(action.payload.index + 1)],
     }),
-    [Actions.completedTodo]: (state, action) => ({
+    [Actions.completeTodo]: (state, action) => ({
       ...state,
       todos: state.todos.map((todo) => ({
         ...todo,
@@ -39,22 +55,26 @@ const todo = handleActions(
       ...state,
       todos: state.todos.map((todo) => ({
         ...todo,
+        deadline: action.payload.id === todo.id ? action.payload.deadline : todo.deadline,
         value: action.payload.id === todo.id ? action.payload.value : todo.value,
-        isForm: action.payload.id === todo.id ? !todo.isForm : todo.isForm,
+        isTask: action.payload.id === todo.id ? !todo.isTask : todo.isTask,
+        favorite: action.payload.id === todo.id ? action.payload.favorite : todo.favorite,
+        memo: action.payload.id === todo.id ? action.payload.memo : todo.memo,
+        priority: action.payload.id === todo.id ? action.payload.priority : todo.priority,
       })),
     }),
     [Actions.changeTextform]: (state, action) => ({
       ...state,
       todos: state.todos.map((todo) => ({
         ...todo,
-        isForm: action.payload.id === todo.id ? true : false,
+        isTask: action.payload.id === todo.id ? true : false,
       })),
     }),
-    [Actions.chancelUpdate]: (state) => ({
+    [Actions.cancelUpdate]: (state) => ({
       ...state,
       todos: state.todos.map((todo) => ({
         ...todo,
-        isForm: false,
+        isTask: false,
       })),
     }),
   },

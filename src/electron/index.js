@@ -54,7 +54,9 @@ app.on("ready", (e) => {
   const menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
 
-  const windSetting = { window: 800, height: 600 };
+  const windSetting = { window: 800, height: 600, webPreferences: {
+    nodeIntegration: true
+  } };
   const mainWindow = new BrowserWindow(windSetting);
   mainWindow.loadFile("public/index.html");
   mainWindow.webContents.openDevTools();

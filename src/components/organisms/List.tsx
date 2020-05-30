@@ -1,19 +1,23 @@
 import * as React from "react";
 import styled from "styled-components";
 
-import Item from "../molecules/Item";
+import TodoItem from "@component/molecules/TodoItem";
 
 interface TodosObject {
+  deadline: number;
+  favorite: boolean;
   id: string;
   isCompleted: boolean;
-  isForm: boolean;
+  isTask: boolean;
+  memo: string;
+  priority: string;
   value: string;
 }
 
 interface Props {
-  chancelUpdate: Function;
+  cancelUpdate: Function;
   changeTextform: Function;
-  completedTodo: Function;
+  completeTodo: Function;
   initialize: Function;
   removeTodo: Function;
   reset: Function;
@@ -23,9 +27,9 @@ interface Props {
 }
 
 const List: React.FC<Props> = ({
-  chancelUpdate,
+  cancelUpdate,
   changeTextform,
-  completedTodo,
+  completeTodo,
   initialize,
   removeTodo,
   reset,
@@ -33,24 +37,57 @@ const List: React.FC<Props> = ({
   todos,
   updateTodo,
 }) => {
+  const [date, setDate] = React.useState(new Date());
+
+  const [sortResult, setSortResult] = React.useState(todos);
+  const handleChange = (e): void => {
+    switch (e.target.value) {
+      case "default":
+        break;
+      case "complete":
+        break;
+      case "priority":
+        break;
+      case "favorite":
+        break;
+      case "date":
+        break;
+    }
+    const result = todos;
+    setSortResult(result);
+  };
   return (
-    <ListStyled>
-      {todos.map((todo, index) => (
-        <Item
-          chancelUpdate={chancelUpdate}
-          changeTextform={changeTextform}
-          completedTodo={completedTodo}
-          index={index}
-          initialize={initialize}
-          key={index}
-          removeTodo={removeTodo}
-          reset={reset}
-          todo={todo}
-          todoListForm={todoListForm}
-          updateTodo={updateTodo}
-        />
-      ))}
-    </ListStyled>
+    <>
+      <div style={{ marginTop: "30px" }}>
+        <label htmlFor="sort">並び順(未実装): </label>
+        <select name="sort" id="sort" defaultValue="default" onChange={handleChange}>
+          <option value="default">デフォルト</option>
+          <option value="complete">達成済み</option>
+          <option value="priority">優先度順</option>
+          <option value="favorite">お気に入り</option>
+          <option value="date">期限</option>
+        </select>
+      </div>
+      <ListStyled>
+        {todos.map((todo, index) => (
+          <TodoItem
+            date={date}
+            setDate={setDate}
+            cancelUpdate={cancelUpdate}
+            changeTextform={changeTextform}
+            completeTodo={completeTodo}
+            index={index}
+            initialize={initialize}
+            key={index}
+            removeTodo={removeTodo}
+            reset={reset}
+            todo={todo}
+            todoListForm={todoListForm}
+            updateTodo={updateTodo}
+          />
+        ))}
+      </ListStyled>
+    </>
   );
 };
 

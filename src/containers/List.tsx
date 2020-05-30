@@ -1,8 +1,8 @@
-import { Actions } from "../modules/todo";
+import { Actions } from "@module/todo";
 import { connect } from "react-redux";
 import { reduxForm } from "redux-form";
 
-import ListComponent from "../components/organisms/List";
+import ListComponent from "@component/organisms/List";
 
 const mapStateToProps = (state) => {
   return {
@@ -13,10 +13,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   removeTodo: (index): Record<string, number> => dispatch(Actions.removeTodo(index)),
-  completedTodo: (id): Record<string, string> => dispatch(Actions.completedTodo(id)),
-  updateTodo: (id, value): Record<string, string> => dispatch(Actions.updateTodo(id, value)),
+  completeTodo: (id): Record<string, string> => dispatch(Actions.completeTodo(id)),
+  updateTodo: (id, value, form): Record<string, string> => dispatch(Actions.updateTodo(id, value, form)),
   changeTextform: (id): Record<string, string> => dispatch(Actions.changeTextform(id)),
-  chancelUpdate: (): Record<string, void> => dispatch(Actions.chancelUpdate()),
+  cancelUpdate: (): Record<string, void> => dispatch(Actions.cancelUpdate()),
 });
 
 const List = connect(
