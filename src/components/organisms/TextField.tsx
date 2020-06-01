@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Field } from "redux-form";
-// import * as moment from "moment";
+import axios from "axios";
 import Calendar from "react-calendar";
 
 import InputField from "@component/molecules/InputField";
@@ -20,6 +20,16 @@ const TextField: React.FC<Props> = ({ onClick, reset, value }) => {
     const deadline = (date.getTime() - new Date().getTime()) / 86400000 + 1;
     if (value.values.todoForm) {
       const form = { favorite: favorite, priority: priority, deadline: deadline };
+      axios.get("/create", {
+        params: {
+          deadline: form.deadline,
+          favorite: form.favorite,
+          isCompleted: false,
+          memo: "",
+          priority: form.priority,
+          value: value.values.todoForm,
+        },
+      });
       onClick(value.values.todoForm, form);
       reset();
       setDate(new Date());

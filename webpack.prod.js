@@ -9,7 +9,7 @@ const mainIndex = common.findIndex(config => config.target === "web");
 
 const devConfig = {
     mode: "production",
-    target: "electron-main",
+    // target: "electron-main",
     plugins: [
         new BomPlugin(true)
     ],

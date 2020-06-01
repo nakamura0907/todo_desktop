@@ -1,5 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
+import axios from "axios";
 
 import TodoItem from "@component/molecules/TodoItem";
 
@@ -38,7 +39,13 @@ const List: React.FC<Props> = ({
   updateTodo,
 }) => {
   const [date, setDate] = React.useState(new Date());
-
+  const [hoge, setHoge] = React.useState(
+    axios.get("/read").then(function (response) {
+      console.log(response.data.logs);
+      return response.data.logs;
+    })
+  );
+  console.log(hoge);
   const [sortResult, setSortResult] = React.useState(todos);
   const handleChange = (e): void => {
     switch (e.target.value) {
