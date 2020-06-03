@@ -50,10 +50,25 @@ app.get('/read', (req, res) => {
 
 app.get('/update', (req, res) => {
     const q = req.query;
+    db.update({_id: q.id}, {
+        deadline: q.deadline,
+        favorite: q.favorite,
+        isCompleted: q.isCompleted,
+        memo: q.memo,
+        priority: q.priority,
+        value: q.value,
+    }, {}, function(err, numRemoved) {
+        console.log(err)
+        console.log(numRemoved)
+    })
 })
 
 app.get('/delete', (req, res) => {
     const q = req.query;
+    db.remove({_id: q.id}, {}, function(err, numRemoved) {
+        console.log(err)
+        console.log(numRemoved)
+    })
 })
 
 function sendJSON(res, result, obj) {
