@@ -52,7 +52,7 @@
   "dependencies": {
     "@types/react": "^16.9.29",
     "@types/react-dom": "^16.9.5",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "classnames": "^2.2.6",
     "expo": "^37.0.8",
     "express": "^4.17.1",
